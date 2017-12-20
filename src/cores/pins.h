@@ -56,11 +56,11 @@ void init_pin_uno();
 
 // Setter
 
-enum PinFunc { GPIO = 0, UNO = 1, Func2 = 2, SWORD = 3 };
-void set_pin_func(uint8_t pin, enum PinFunc func);
+typedef enum { GPIO = 0, UNO = 1, Func2 = 2, SWORD = 3 } PinFunc;
+void set_pin_func(uint8_t pin, PinFunc func);
 
-enum PinMode { Input = 0, OutputOpenDrain = 1, OutputOpenSource = 2, OutputPushPull = 3 };
-void set_pin_mode(uint8_t pin, enum PinMode mode);
+typedef enum { Input = 0, OutputOpenDrain = 1, OutputOpenSource = 2, OutputPushPull = 3 } PinMode;
+void set_pin_mode(uint8_t pin, PinMode mode);
 
 uint8_t read_pin_digital_input(uint8_t pin);
 void set_pin_digital_level(uint8_t pin, uint8_t level);

@@ -101,7 +101,7 @@ void init_pin_uno() {
 
 
 
-void set_pin_func(uint8_t pin, enum PinFunc func) {
+void set_pin_func(uint8_t pin, PinFunc func) {
     uint32_t shift = pin_map[pin].pos * 2 + 16;  // high 16 bit
     uint32_t* reg = pin_map[pin].bank->reg1_addr;
     // unset previous func
@@ -114,7 +114,7 @@ void set_pin_func(uint8_t pin, enum PinFunc func) {
 
 
 
-void set_pin_mode(uint8_t pin, enum PinMode mode) {
+void set_pin_mode(uint8_t pin, PinMode mode) {
     uint32_t shift = pin_map[pin].pos * 2;  // low 16 bit
     uint32_t* reg = pin_map[pin].bank->reg1_addr;
     // unset previous func

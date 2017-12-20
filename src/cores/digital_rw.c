@@ -1,6 +1,7 @@
-#include "Arduino.h"
+#include <cores/Arduino.h>
+#include <cores/pins.h>
 
-void pinMode(uint8_t pin, enum DigitalPinMode mode) {
+void pinMode(uint8_t pin, DigitalPinMode mode) {
     switch (mode) {
         case INPUT:
             set_pin_mode(pin, Input);
@@ -11,7 +12,7 @@ void pinMode(uint8_t pin, enum DigitalPinMode mode) {
     }
 }
 
-void digitalWrite(uint8_t pin, enum DigitalPinLevel level) {
+void digitalWrite(uint8_t pin, DigitalPinLevel level) {
     switch(level){
         case LOW:
             set_pin_digital_level(pin, 0);

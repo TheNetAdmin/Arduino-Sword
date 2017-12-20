@@ -11,16 +11,10 @@ extern "C" {
 void init_arduino();
 
 // Digital read & write
-enum DigitalPinMode{
-    INPUT = 0,
-    OUTPUT = 1
-};
-void pinMode(uint8_t pin, enum DigitalPinMode mode);
-enum DigitalPinLevel{
-    LOW = 0,
-    HIGH = 1
-};
-void digitalWrite(uint8_t pin, enum DigitalPinLevel level);
+typedef enum { INPUT = 0, OUTPUT = 1 } DigitalPinMode;
+void pinMode(uint8_t pin, DigitalPinMode mode);
+typedef enum { LOW = 0, HIGH = 1 } DigitalPinLevel;
+void digitalWrite(uint8_t pin, DigitalPinLevel level);
 int digitalRead(uint8_t pin);
 
 // Analog read & write

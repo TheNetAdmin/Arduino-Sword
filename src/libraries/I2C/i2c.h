@@ -22,7 +22,7 @@ I2CState write_i2c(uint8_t d_addr, uint8_t r_addr, const uint8_t* buffer, uint32
 
 I2CState read_i2c(uint8_t d_addr, uint8_t r_addr, uint8_t* buffer, uint32_t length);
 
-I2CState read_i2c(uint8_t d_addr, uint8_t* buffer, uint32_t length);
+I2CState read_i2c_simple(uint8_t d_addr, uint8_t *buffer, uint32_t length);
 
 I2CState get_i2c_state();
 

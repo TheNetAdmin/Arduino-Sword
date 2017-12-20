@@ -245,7 +245,7 @@ I2CResult i2c_receive_data(uint8_t *buffer, uint32_t length) {
             wait_usec(i2c_time);
             // SCL HIGH
             pinMode(PIN_ADC_SCL, INPUT);
-            while(!digitalRead(PIN_ADC_SCL)){}
+            while (!digitalRead(PIN_ADC_SCL)) {}
             wait_usec(i2c_time);
         }
     }
@@ -318,5 +318,35 @@ I2CState read_i2c(uint8_t d_addr, uint8_t r_addr, uint8_t *buffer, uint32_t leng
 
     i2c_stop_send();
     curr_state = I2C_OK;
+    return curr_state;
+}
+
+I2CState read_i2c_simple(uint8_t d_addr, uint8_t *buffer, uint32_t length) {
+    I2CResult result_state;
+    if (curr_state == I2C_NO_INIT) {
+        init_i2c();
+    }
+
+    result_state = i2c_start_send();
+    if (result_state != START_SUCC) {
+        return i2c_send_error(result_state);
+    }
+
+    result_state = i2c_send_sla(d_addr + i2c_read);
+    if (result_state != SEND_SLA_R_SUCC) {
+        return i2c_send_error(result_state);
+    }
+
+    result_state = i2c_receive_data(buffer, length);
+    if (result_state != RECV_DATA_END) {
+        return i2c_send_error(result_state);
+    }
+
+    i2c_stop_send();
+    curr_state = I2C_OK;
+    return curr_state;
+}
+
+I2CState get_i2c_state() {
     return curr_state;
 }

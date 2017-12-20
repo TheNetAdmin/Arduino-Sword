@@ -1,7 +1,7 @@
 #ifndef _I2C_H_
 #define _I2C_H_
 
-#include <cores/types.h>
+#include <inttypes.h>
 
 typedef enum { 
     I2C_OK = 0,

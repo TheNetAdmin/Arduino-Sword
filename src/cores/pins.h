@@ -1,7 +1,7 @@
 #ifndef _SWORD_PINS_H_
 #define _SWORD_PINS_H_
 
-#include "types.h"
+#include "include/inttypes.h"
 
 static const uint32_t* const base_addr = (uint32_t*)0xbfc09200;
 

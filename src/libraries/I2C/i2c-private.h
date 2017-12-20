@@ -1,7 +1,7 @@
 #ifndef _I2C_PRIVATE_H_
 #define _I2C_PRIVATE_H_
 
-#include <cores/types.h>
+#include <inttypes.h>
 
 void i2c_stop_send();
 typedef enum {

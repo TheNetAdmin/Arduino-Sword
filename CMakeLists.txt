@@ -10,11 +10,11 @@ add_executable(Arduino_SWORD
         src/cores/digital_rw.c
         src/cores/pins.c
         src/cores/pins.h
-        src/cores/types.h
+        src/include/inttypes.h
         src/libraries/I2C/i2c.c
         src/libraries/I2C/i2c.h
         src/libraries/I2C/i2c-sample.cpp
         src/libraries/I2C/i2c-sample.h
         src/libraries/I2C/i2c-private.h)
 
-target_include_directories(Arduino_SWORD PUBLIC src)
+target_include_directories(Arduino_SWORD PUBLIC src include)

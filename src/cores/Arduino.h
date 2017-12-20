@@ -1,7 +1,7 @@
 #ifndef _SWRODD_ARDUINO_H_
 #define _SWRODD_ARDUINO_H_
 
-#include "types.h"
+#include "include/inttypes.h"
 
 #ifdef __cplusplus
 extern "C" {

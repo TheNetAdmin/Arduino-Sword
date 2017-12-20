@@ -1,5 +1,5 @@
 #include "pins.h"
-#include "types.h"
+#include "include/inttypes.h"
 
 const GPIO_bank gpio_bank0 = {base_addr + 0, base_addr + 1};
 const GPIO_bank gpio_bank1 = {base_addr + 2, base_addr + 3};

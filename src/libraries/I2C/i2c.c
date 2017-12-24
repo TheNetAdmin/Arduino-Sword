@@ -3,26 +3,12 @@
 #include <cores/Arduino.h>
 #include <cores/pins.h>
 
+// Call back funcs
+static void (*on_slave_transmit)(void);
+
+static void (*on_slave_receive)(uint8_t *, int);
+
 // Platform dependent functions
-
-void gpio_init() {
-    // TODO
-}
-
-void gpio_set_dir(uint32_t pin, uint32_t mode) {
-    // TODO
-    // use digital pinMode instead
-}
-
-void gpio_set_value(uint32_t pin, uint32_t value) {
-    // TODO
-    // use digital digitalWrite
-}
-
-int32_t gpio_get_state(uint32_t pin) {
-    // TODO
-    // use digital digitalRead
-}
 
 void wait_usec(uint32_t usec) {
     // TODO
@@ -35,7 +21,7 @@ static const uint32_t i2c_time = 2;
 static const uint8_t i2c_read = 0x01;
 static const uint8_t i2c_write = 0x00;
 
-void i2c_stop_send() {
+void stop_send_i2c() {
     pinMode(PIN_ADC_SCL, OUTPUT);
     digitalWrite(PIN_ADC_SCL, LOW);
     pinMode(PIN_ADC_SDA, OUTPUT);
@@ -43,7 +29,8 @@ void i2c_stop_send() {
     wait_usec(i2c_time);
 
     pinMode(PIN_ADC_SCL, INPUT);
-    while (!digitalRead(PIN_ADC_SCL)) {}
+    while (!digitalRead(PIN_ADC_SCL)) {
+    }
     wait_usec(1);
 
     pinMode(PIN_ADC_SDA, INPUT);
@@ -121,7 +108,8 @@ I2CResult i2c_send_byte(const uint8_t data) {
 
         // SCL H transmit data
         pinMode(PIN_ADC_SCL, INPUT);
-        while (!digitalRead(PIN_ADC_SCL)) {}
+        while (!digitalRead(PIN_ADC_SCL)) {
+        }
         if (pin_state != digitalRead(PIN_ADC_SDA)) {
             return SEND_BYTE_FAIL;
         }
@@ -136,7 +124,8 @@ I2CResult i2c_send_byte(const uint8_t data) {
     wait_usec(i2c_time);
     // scl high
     pinMode(PIN_ADC_SCL, INPUT);
-    while (!digitalRead(PIN_ADC_SCL)) {}
+    while (!digitalRead(PIN_ADC_SCL)) {
+    }
     if (!digitalRead(PIN_ADC_SDA)) {
         wait_usec(i2c_time);
         return SEND_BYTE_SUCC;
@@ -174,19 +163,19 @@ void bus_clear() {
         digitalWrite(PIN_ADC_SCL, LOW);
         wait_usec(i2c_time);
         pinMode(PIN_ADC_SCL, INPUT);
-        while (!digitalRead(PIN_ADC_SCL)) {}
+        while (!digitalRead(PIN_ADC_SCL)) {
+        }
         wait_usec(i2c_time);
     }
-    i2c_stop_send();
+    stop_send_i2c();
 }
 
 I2CState i2c_send_error(I2CResult state) {
     if (state == DEFAULT) {
-
     } else if (state == START_FAIL_BUSY) {
         curr_state = I2C_BUSY;
     }
-    i2c_stop_send();
+    stop_send_i2c();
     return curr_state;
 }
 
@@ -199,7 +188,8 @@ I2CResult i2c_restart_send() {
 
     // set start condition
     pinMode(PIN_ADC_SCL, INPUT);
-    while (!digitalRead(PIN_ADC_SCL)) {}
+    while (!digitalRead(PIN_ADC_SCL)) {
+    }
     pinMode(PIN_ADC_SDA, OUTPUT);
     digitalWrite(PIN_ADC_SDA, LOW);
     wait_usec(i2c_time);
@@ -219,7 +209,8 @@ I2CResult i2c_receive_data(uint8_t *buffer, uint32_t length) {
         for (int j = 0; j < 8; ++j) {
             // SCL HIGH
             pinMode(PIN_ADC_SCL, INPUT);
-            while (!digitalRead(PIN_ADC_SCL)) {}
+            while (!digitalRead(PIN_ADC_SCL)) {
+            }
             *buffer |= digitalRead(PIN_ADC_SDA) << (7 - j);
             wait_usec(i2c_time);
 
@@ -236,7 +227,8 @@ I2CResult i2c_receive_data(uint8_t *buffer, uint32_t length) {
             // SCL HIGH
             wait_usec(i2c_time);
             pinMode(PIN_ADC_SCL, INPUT);
-            while (!digitalRead(PIN_ADC_SCL)) {};
+            while (!digitalRead(PIN_ADC_SCL)) {
+            };
             wait_usec(i2c_time);
             break;
         } else {
@@ -245,14 +237,15 @@ I2CResult i2c_receive_data(uint8_t *buffer, uint32_t length) {
             wait_usec(i2c_time);
             // SCL HIGH
             pinMode(PIN_ADC_SCL, INPUT);
-            while (!digitalRead(PIN_ADC_SCL)) {}
+            while (!digitalRead(PIN_ADC_SCL)) {
+            }
             wait_usec(i2c_time);
         }
     }
     return RECV_DATA_END;
 }
 
-I2CState write_i2c(uint8_t d_addr, uint8_t r_addr, const uint8_t *buffer, uint32_t length) {
+I2CState write_i2c(uint8_t dev_addr, const uint8_t *data, uint8_t length, uint8_t send_stop) {
     I2CResult result_state;
     if (curr_state == I2C_NO_INIT) {
         init_i2c();
@@ -263,27 +256,25 @@ I2CState write_i2c(uint8_t d_addr, uint8_t r_addr, const uint8_t *buffer, uint32
         return i2c_send_error(result_state);
     }
 
-    result_state = i2c_send_sla(d_addr + i2c_write);
+    result_state = i2c_send_sla(dev_addr + i2c_write);
     if (result_state != SEND_SLA_W_SUCC) {
         i2c_send_error(result_state);
     }
 
-    result_state = i2c_send_data(&r_addr, 1);
+    result_state = i2c_send_data(data, length);
     if (result_state != SEND_DATA_SUCC) {
         i2c_send_error(result_state);
     }
 
-    result_state = i2c_send_data(buffer, length);
-    if (result_state != SEND_DATA_SUCC) {
-        i2c_send_error(result_state);
+    if (0 == send_stop) {
+        // stop_send == false
+        stop_send_i2c();
     }
-
-    i2c_stop_send();
     curr_state = I2C_OK;
     return curr_state;
 }
 
-I2CState read_i2c(uint8_t d_addr, uint8_t r_addr, uint8_t *buffer, uint32_t length) {
+I2CState read_i2c(uint8_t dev_addr, uint8_t *buffer, uint32_t length, uint8_t stop_send) {
     I2CResult result_state;
 
     if (curr_state == I2C_NO_INIT) {
@@ -295,20 +286,15 @@ I2CState read_i2c(uint8_t d_addr, uint8_t r_addr, uint8_t *buffer, uint32_t leng
         return i2c_send_error(result_state);
     }
 
-    result_state = i2c_send_sla(d_addr + i2c_write);
+    result_state = i2c_send_sla(dev_addr + i2c_write);
     if (result_state != SEND_SLA_W_SUCC) {
-        return i2c_send_error(result_state);
-    }
-
-    result_state = i2c_send_data(&r_addr, 1);
-    if (result_state != SEND_DATA_SUCC) {
         return i2c_send_error(result_state);
     }
 
     result_state = i2c_restart_send();
     // No error state yet
 
-    result_state = i2c_send_sla(d_addr + i2c_read);
+    result_state = i2c_send_sla(dev_addr + i2c_read);
     if (result_state != SEND_SLA_R_SUCC) {
         return i2c_send_error(result_state);
     }
@@ -316,37 +302,22 @@ I2CState read_i2c(uint8_t d_addr, uint8_t r_addr, uint8_t *buffer, uint32_t leng
     result_state = i2c_receive_data(buffer, length);
     // No error state yet
 
-    i2c_stop_send();
-    curr_state = I2C_OK;
-    return curr_state;
-}
-
-I2CState read_i2c_simple(uint8_t d_addr, uint8_t *buffer, uint32_t length) {
-    I2CResult result_state;
-    if (curr_state == I2C_NO_INIT) {
-        init_i2c();
+    if (0 == stop_send) {
+        // stop_send == false
+        stop_send_i2c();
     }
-
-    result_state = i2c_start_send();
-    if (result_state != START_SUCC) {
-        return i2c_send_error(result_state);
-    }
-
-    result_state = i2c_send_sla(d_addr + i2c_read);
-    if (result_state != SEND_SLA_R_SUCC) {
-        return i2c_send_error(result_state);
-    }
-
-    result_state = i2c_receive_data(buffer, length);
-    if (result_state != RECV_DATA_END) {
-        return i2c_send_error(result_state);
-    }
-
-    i2c_stop_send();
     curr_state = I2C_OK;
     return curr_state;
 }
 
 I2CState get_i2c_state() {
     return curr_state;
+}
+
+void attach_slave_rx_event(void (*function)(uint8_t *, int)) {
+    on_slave_receive = function;
+}
+
+void attach_slave_tx_event(void (*function)(void)) {
+    on_slave_transmit = function;
 }

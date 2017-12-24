@@ -11,4 +11,6 @@ typedef signed long int int32_t;
 
 static unsigned long int max_uint32_t = 0xffffffff;
 
+typedef uint32_t size_t;
+
 #endif // _SWORD_TYPES_H_

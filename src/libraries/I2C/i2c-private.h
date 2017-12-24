@@ -3,7 +3,6 @@
 
 #include <inttypes.h>
 
-void i2c_stop_send();
 typedef enum {
     DEFAULT = 0,
     // bus status

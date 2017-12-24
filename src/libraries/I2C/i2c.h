@@ -16,14 +16,18 @@ typedef enum {
 
 void init_i2c();
 
+void stop_send_i2c();
+
 void bus_clear();
 
-I2CState write_i2c(uint8_t d_addr, uint8_t r_addr, const uint8_t* buffer, uint32_t length);
+I2CState write_i2c(uint8_t dev_addr, const uint8_t *data, uint8_t length, uint8_t send_stop);
 
-I2CState read_i2c(uint8_t d_addr, uint8_t r_addr, uint8_t* buffer, uint32_t length);
-
-I2CState read_i2c_simple(uint8_t d_addr, uint8_t *buffer, uint32_t length);
+I2CState read_i2c(uint8_t dev_addr, uint8_t *buffer, uint32_t length, uint8_t stop_send);
 
 I2CState get_i2c_state();
+
+void attach_slave_rx_event(void (*)(uint8_t *, int));
+
+void attach_slave_tx_event(void (*)(void));
 
 #endif  // ! _I2C_H_

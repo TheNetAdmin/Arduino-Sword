@@ -9,8 +9,11 @@ typedef signed char int8_t;
 typedef signed short int int16_t;
 typedef signed long int int32_t;
 
-static unsigned long int max_uint32_t = 0xffffffff;
+#define max_uint32_t ((uint32_t)0xffffffff)
 
 typedef uint32_t size_t;
+
+#define true ((uint8_t)1)
+#define false ((uint8_t)0)
 
 #endif // _SWORD_TYPES_H_

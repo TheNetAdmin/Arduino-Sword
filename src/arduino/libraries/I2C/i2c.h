@@ -12,6 +12,8 @@ void stop_send_i2c();
 void bus_clear();
 
 void set_pins_i2c(uint8_t sda, uint8_t scl);
+uint8_t get_sda_i2c();
+uint8_t get_scl_i2c();
 
 I2CState write_i2c(uint8_t dev_addr, const uint8_t *data, uint8_t length, uint8_t send_stop);
 

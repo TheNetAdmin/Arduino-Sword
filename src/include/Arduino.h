@@ -16,7 +16,7 @@ void digitalWrite(uint8_t pin, DigitalPinLevel level);
 int digitalRead(uint8_t pin);
 
 // Analog read & write
-int analogRead(uint8_t pin);
+uint16_t analogRead(uint8_t pin);
 void analogReference(uint8_t mode);
 void analogWrite(uint8_t pin, uint8_t value);
 

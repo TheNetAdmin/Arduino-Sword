@@ -4,10 +4,10 @@ OBJS := main.o
 
 # compile options
 export ARCH := mips32
-export TARGET := arduino.bin
-export MAP := arduino.map
-export ELF := arduino.elf
-export DISASSEMBLY := arduino.txt
+export TARGET := kernel.bin
+export MAP := kernel.map
+export ELF := kernel.elf
+export DISASSEMBLY := kernel.txt
 ifndef INSTALL_DIR
 	INSTALL_DIR := 
 endif

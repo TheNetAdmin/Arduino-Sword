@@ -17,6 +17,14 @@ void set_pins_i2c(uint8_t sda, uint8_t scl) {
     I2C_SCL = scl;
 }
 
+uint8_t get_sda_i2c() {
+    return I2C_SDA;
+}
+
+uint8_t get_scl_i2c() {
+    return I2C_SCL;
+}
+
 void stop_send_i2c() {
     pinMode(I2C_SCL, OUTPUT);
     digitalWrite(I2C_SCL, LOW);

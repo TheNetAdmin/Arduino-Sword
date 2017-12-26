@@ -22,6 +22,6 @@ uint16_t getTemperature_hdc1080();
 uint16_t getHumidity_hdc1080();
 uint16_t getManufacturerID_hdc1080();
 uint16_t getDeviceID_hdc1080();
-uint16_t* getSerialID_hdc1080(uint16_t* pdata, uint8_t length);
+uint16_t* getSerialID_hdc1080(uint16_t* data, uint8_t length);
 
 #endif /*__MELODY_HDC1080_H__*/

@@ -27,8 +27,8 @@ temperature temp_map[MAP_SIZE] = {
 
 int32_t get_temperature_lmt84(int32_t voltage) {
     int map_index = MAP_SIZE - 1;
-    for(int i = 0; i < MAP_SIZE; i++) {
-        if(voltage > temp_map[i].voltage){
+    for (int i = 0; i < MAP_SIZE; i++) {
+        if (voltage > temp_map[i].voltage) {
             map_index = i;
             break;
         }

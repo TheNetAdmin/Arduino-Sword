@@ -10,4 +10,4 @@ typedef struct {
 
 int32_t get_temperature_lmt84(int32_t voltage);
 
-#endif // ! _LIB_LMT84_H_
+#endif  // ! _LIB_LMT84_H_

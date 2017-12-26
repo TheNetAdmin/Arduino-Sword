@@ -15,7 +15,7 @@ void pinMode(uint8_t pin, DigitalPinMode mode) {
 }
 
 void digitalWrite(uint8_t pin, DigitalPinLevel level) {
-    switch(level){
+    switch (level) {
         case LOW:
             set_pin_digital_level(pin, 0);
             break;

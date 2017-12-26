@@ -1,7 +1,7 @@
-#include <vga.h>
 #include <utils.h>
+#include <vga.h>
 
-void* kernel_memcpy(void* dest, void* src, int len) {
+void* memcpy(void* dest, void* src, int len) {
     char* deststr = dest;
     char* srcstr = src;
     while (len--) {
@@ -14,7 +14,7 @@ void* kernel_memcpy(void* dest, void* src, int len) {
 
 #pragma GCC push_options
 #pragma GCC optimize("O2")
-void* kernel_memset(void* dest, int b, int len) {
+void* memset(void* dest, int b, int len) {
     char content = b ? -1 : 0;
     char* deststr = dest;
     while (len--) {
@@ -25,14 +25,14 @@ void* kernel_memset(void* dest, int b, int len) {
 }
 #pragma GCC pop_options
 
-unsigned int* kernel_memset_word(unsigned int* dest, unsigned int w, int len) {
+unsigned int* memset_word(unsigned int* dest, unsigned int w, int len) {
     while (len--)
         *dest++ = w;
 
     return dest;
 }
 
-int kernel_strcmp(const char* dest, const char* src) {
+int strcmp(const char* dest, const char* src) {
     while ((*dest == *src) && (*dest != 0)) {
         dest++;
         src++;
@@ -40,7 +40,7 @@ int kernel_strcmp(const char* dest, const char* src) {
     return *dest - *src;
 }
 
-char* kernel_strcpy(char* dest, const char* src) {
+char* strcpy(char* dest, const char* src) {
     while ((*dest++ = *src++))
         ;
     return dest;
@@ -59,7 +59,7 @@ int pow(int x, int z) {
 #pragma GCC push_options
 #pragma GCC optimize("O0")
 
-void kernel_cache(unsigned int block_index) {
+void cache(unsigned int block_index) {
     block_index = block_index | 0x80000000;
     asm volatile(
         "li $t0, 233\n\t"
@@ -73,12 +73,12 @@ void kernel_cache(unsigned int block_index) {
 
 #pragma GCC pop_options
 
-void kernel_serial_puts(char* str) {
+void serial_puts(char* str) {
     while (*str)
         *((unsigned int*)0xbfc09018) = *str++;
 }
 
-void kernel_serial_putc(char c) {
+void serial_putc(char c) {
     *((unsigned int*)0xbfc09018) = c;
 }
 

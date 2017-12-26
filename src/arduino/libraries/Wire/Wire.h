@@ -25,4 +25,4 @@ int available_wire();
 
 int read_wire();
 
-#endif // ! _WIRE_H_
+#endif  // ! _WIRE_H_

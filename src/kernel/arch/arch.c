@@ -22,16 +22,17 @@ volatile unsigned int kernel_sp = 0x81000000;
 void exc_intr_handler(unsigned int status, unsigned int cause, context* pt_context) {
     unsigned bad_vaddr;
     asm volatile("mfc0 %0, $8\n\t" : "=r"(bad_vaddr));
-    kernel_printf("\t Cause: 0x%x, Status: 0x%x, BadVaddr: 0x%x\n", cause, status, bad_vaddr);
-    while (1);
+    printf("\t Cause: 0x%x, Status: 0x%x, BadVaddr: 0x%x\n", cause, status, bad_vaddr);
+    while (1)
+        ;
 }
 
-void do_exceptions(unsigned int status, unsigned int cause, context* pt_context){
-    kernel_printf("Exception:\n");
+void do_exceptions(unsigned int status, unsigned int cause, context* pt_context) {
+    printf("Exception:\n");
     exc_intr_handler(status, cause, pt_context);
 }
-void do_interrupts(unsigned int status, unsigned int cause, context* pt_context){
-    kernel_printf("Interrupt:\n");
+void do_interrupts(unsigned int status, unsigned int cause, context* pt_context) {
+    printf("Interrupt:\n");
     exc_intr_handler(status, cause, pt_context);
 }
 void init_exception() {

@@ -1,9 +1,9 @@
-#include <Arduino.h>
-#include <vga.h>
-#include <inttypes.h>
 #include "Melody_HDC1080.h"
-#include "../Wire/Wire.h"
+#include <Arduino.h>
+#include <inttypes.h>
+#include <vga.h>
 #include "../I2C/i2c.h"
+#include "../Wire/Wire.h"
 
 uint16_t _read_hdc1080(uint8_t reg_addr) {
     set_pins_i2c(PIN_AIO4, PIN_AIO5);
@@ -19,7 +19,7 @@ uint16_t _read_hdc1080(uint8_t reg_addr) {
         data = read_wire() << 8;
         data |= read_wire();
     } else {
-        kernel_printf("_read_hdc1080: no enough data\n");
+        printf("_read_hdc1080: no enough data\n");
     }
     return data;
 }
@@ -58,9 +58,13 @@ uint16_t getHumidity_hdc1080() {
     // return (humidity / 65536.0 * 100.0);
 }
 
-uint16_t getManufacturerID_hdc1080() { return _read_hdc1080(HDCREG_MANUFACTURERID); }
+uint16_t getManufacturerID_hdc1080() {
+    return _read_hdc1080(HDCREG_MANUFACTURERID);
+}
 
-uint16_t getDeviceID_hdc1080() { return _read_hdc1080(HDCREG_DEVICEID); }
+uint16_t getDeviceID_hdc1080() {
+    return _read_hdc1080(HDCREG_DEVICEID);
+}
 
 uint16_t *getSerialID_hdc1080(uint16_t *data, uint8_t length) {
     if (length < 3) {

@@ -19,14 +19,14 @@ struct screen_color {
 };
 
 void init_vga();
-void kernel_set_cursor();
-void kernel_clear_screen(int row);
-void kernel_scroll_screen();
-void kernel_putchar_at(int ch, int fc, int bg, int row, int col);
-int kernel_putchar(int ch, int fc, int bg);
-int kernel_puts(const char* s, int fc, int bg);
-int kernel_putint(int i, int fc, int bg);
-int kernel_vprintf(const char *format, va_list ap);
-int kernel_printf(const char* format, ...);
+void set_cursor();
+void clear_screen(int row);
+void scroll_screen();
+void putchar_at(int ch, int fc, int bg, int row, int col);
+int putchar(int ch, int fc, int bg);
+int puts(const char* s, int fc, int bg);
+int putint(int i, int fc, int bg);
+int vprintf(const char *format, va_list ap);
+int printf(const char* format, ...);
 
 #endif // ! _DRIVER_VGA_H

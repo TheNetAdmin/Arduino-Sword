@@ -1,7 +1,7 @@
-#include <Arduino.h>
-#include <vga.h>
-#include <inttypes.h>
 #include "Wire.h"
+#include <Arduino.h>
+#include <inttypes.h>
+#include <vga.h>
 #include "../I2C/i2c.h"
 
 static uint8_t rxBuffer[BUFFER_LENGTH];
@@ -25,7 +25,9 @@ void begin_wire() {
     init_i2c();
 }
 
-void end_wire() { stop_send_i2c(); }
+void end_wire() {
+    stop_send_i2c();
+}
 
 void begin_transmission_wire(uint8_t address) {
     // indicate that we are transmitting
@@ -87,7 +89,9 @@ size_t write_wire(const uint8_t *data, size_t length) {
     return length;
 }
 
-int available_wire() { return rxBufferLength - rxBufferIndex; }
+int available_wire() {
+    return rxBufferLength - rxBufferIndex;
+}
 
 int read_wire() {
     int value = -1;

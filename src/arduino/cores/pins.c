@@ -1,7 +1,7 @@
+#include "pins.h"
+#include <Arduino.h>
 #include <inttypes.h>
 #include <vga.h>
-#include <Arduino.h>
-#include "pins.h"
 
 GPIO_bank gpio_bank0, gpio_bank1, gpio_bank2, gpio_bank3;
 
@@ -120,8 +120,8 @@ void init_pin_gpio() {
 }
 
 void print_bank_info(uint8_t index) {
-    GPIO_bank * bank;
-    switch(index) {
+    GPIO_bank* bank;
+    switch (index) {
         case 0:
             bank = &gpio_bank0;
             break;
@@ -135,10 +135,11 @@ void print_bank_info(uint8_t index) {
             bank = &gpio_bank3;
             break;
         default:
-            kernel_printf("Wrong index.\n");
-            while(1);
+            printf("Wrong index.\n");
+            while (1)
+                ;
     }
-    kernel_printf("Bank%d - Reg0: 0x%x, Reg1: 0x%x\n", index, *(bank->reg0_addr), *(bank->reg1_addr));
+    printf("Bank%d - Reg0: 0x%x, Reg1: 0x%x\n", index, *(bank->reg0_addr), *(bank->reg1_addr));
 }
 
 void set_pin_func(uint8_t pin, PinFunc func) {
@@ -152,8 +153,6 @@ void set_pin_func(uint8_t pin, PinFunc func) {
     *reg |= pin_func;
 }
 
-
-
 void set_pin_mode(uint8_t pin, PinMode mode) {
     uint32_t shift = pin_map[pin].pos * 2;  // low 16 bit
     uint32_t* reg = pin_map[pin].bank->reg1_addr;
@@ -165,7 +164,7 @@ void set_pin_mode(uint8_t pin, PinMode mode) {
     *reg |= pin_func;
 }
 
-uint8_t read_pin_digital_input(uint8_t pin){
+uint8_t read_pin_digital_input(uint8_t pin) {
     uint8_t shift = pin_map[pin].pos;
     uint32_t* reg = pin_map[pin].bank->reg0_addr;
     uint32_t value = *reg;
@@ -176,14 +175,14 @@ uint8_t read_pin_digital_input(uint8_t pin){
 void set_pin_digital_level(uint8_t pin, uint8_t level) {
     uint8_t shift = pin_map[pin].pos;
     uint32_t* reg = pin_map[pin].bank->reg0_addr;
-    if(level == 0) {
+    if (level == 0) {
         // LOW level, high 8 bit
         shift += 24;
     } else if (level == 1) {
         // HIGH level, 16 ~ 23 bit
         shift += 16;
     } else {
-        return ;
+        return;
     }
     *reg |= 1 << shift;
 }

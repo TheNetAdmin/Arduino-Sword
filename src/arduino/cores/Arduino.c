@@ -1,10 +1,10 @@
 #include <Arduino.h>
-#include "pins.h"
-#include "../libraries/Wire/Wire.h"
 #include <vga.h>
+#include "../libraries/Wire/Wire.h"
+#include "pins.h"
 
 void init_arduino() {
-    kernel_clear_screen(31);
+    clear_screen(31);
     init_pin_map();
     init_pin_gpio();
     delay(5000);

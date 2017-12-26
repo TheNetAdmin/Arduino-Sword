@@ -27,7 +27,7 @@ typedef enum {
     SEND_DATA_FAIL,
     // receive_data()
     RECV_DATA_END
-}I2CResult;
+} I2CResult;
 
 I2CState i2c_send_error(I2CResult state);
 I2CResult i2c_start_send();
@@ -38,4 +38,4 @@ I2CResult i2c_send_data(const uint8_t* buffer, uint32_t length);
 I2CResult i2c_restart_send();
 I2CResult i2c_receive_data(uint8_t* buffer, uint32_t length);
 
-#endif //_I2C_PRIVATE_H_
+#endif  //_I2C_PRIVATE_H_

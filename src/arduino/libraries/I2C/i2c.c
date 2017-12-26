@@ -1,8 +1,8 @@
+#include "i2c.h"
 #include <Arduino.h>
 #include <vga.h>
-#include "i2c.h"
-#include "i2c-private.h"
 #include "../../cores/pins.h"
+#include "i2c-private.h"
 
 uint8_t I2C_SDA = PIN_AIO4;
 uint8_t I2C_SCL = PIN_AIO5;
@@ -178,8 +178,9 @@ I2CState i2c_send_error(I2CResult state) {
     } else if (state == START_FAIL_BUSY) {
         curr_state = I2C_BUSY;
     }
-    kernel_printf("i2c_send_error()\n");
-    while(1);
+    printf("i2c_send_error()\n");
+    while (1)
+        ;
     stop_send_i2c();
     return curr_state;
 }

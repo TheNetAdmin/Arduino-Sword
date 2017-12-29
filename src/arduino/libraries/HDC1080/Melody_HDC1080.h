@@ -1,6 +1,8 @@
 #ifndef __MELODY_HDC1080_H__
 #define __MELODY_HDC1080_H__
 
+#include <inttypes.h>
+
 #define HDC_ADDRESS 0x40  // address
 
 #define HDCREG_TEMPERATURE 0x00     // Temperature measurement output

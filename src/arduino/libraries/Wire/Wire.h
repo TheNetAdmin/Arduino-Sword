@@ -4,25 +4,31 @@
 #include <inttypes.h>
 
 #define BUFFER_LENGTH 32
-
 #define WIRE_HAS_END 1
 
 void begin_wire();
-
 void end_wire();
 
-void begin_transmission_wire(uint8_t);
+// addr = Device Address
+void begin_transmission_wire(uint8_t addr);
 
-uint8_t end_transmission_wire(uint8_t);
+// sendStop = 0 : do not stop send after this operation
+// sendStop = 1 : stop send after this operation
+uint8_t end_transmission_wire(uint8_t sendStop);
 
-uint8_t request_from_wire(uint8_t, uint8_t, uint8_t);
+// Read `length` bytes data from `addr`
+// Stop receive after this operation if `sendStop` = 1
+uint8_t request_from_wire(uint8_t addr, uint8_t length, uint8_t sendStop);
 
-size_t write_wire_byte(uint8_t);
+// Write `data` into buffer
+size_t write_wire_byte(uint8_t data);
+// Write `length` bytes from `data` into buffer
+size_t write_wire(const uint8_t * data, size_t length);
 
-size_t write_wire(const uint8_t *, size_t);
-
-int available_wire();
-
+// Read 1 byte from buffer
 int read_wire();
+
+// Query how many bytes are ready to be read
+int available_wire();
 
 #endif  // ! _WIRE_H_

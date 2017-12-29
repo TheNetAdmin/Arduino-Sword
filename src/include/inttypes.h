@@ -13,6 +13,7 @@ typedef signed long int int32_t;
 
 typedef uint32_t size_t;
 
+typedef uint8_t bool;
 #define true ((uint8_t)1)
 #define false ((uint8_t)0)
 

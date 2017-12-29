@@ -1,0 +1,65 @@
+.
+├── Makefile
+├── main.c
+├── arduino
+│   ├── Makefile
+│   ├── cores
+│   │   ├── Makefile
+│   │   ├── analog_rw.c
+│   │   ├── Arduino.c
+│   │   ├── digital_rw.c
+│   │   ├── pins.c
+│   │   └── pins.h
+│   └── libraries
+│       ├── Makefile
+│       ├── ADXL345
+│       │   ├── Makefile
+│       │   ├── adxl345.h
+│       │   └── adxl345.c
+│       ├── HDC1080
+│       │   ├── Makefile
+│       │   ├── Melody_HDC1080.c
+│       │   └── Melody_HDC1080.h
+│       ├── I2C
+│       │   ├── Makefile
+│       │   ├── i2c.h
+│       │   ├── i2c-private.h
+│       │   └── i2c.c
+│       ├── LMT84
+│       │   ├── Makefile
+│       │   ├── lmt84.h
+│       │   └── lmt84.c
+│       └── Wire
+│           ├── Makefile
+│           ├── Wire.c
+│           └── Wire.h
+├── config
+│   ├── debug.h
+│   ├── flags.conf
+│   ├── kernel.ld
+│   ├── make.global
+│   ├── submake.global
+│   └── tools.conf
+├── include
+│   ├── arch.h
+│   ├── Arduino.h
+│   ├── assert.h
+│   ├── inttypes.h
+│   ├── main.h
+│   ├── utils.h
+│   └── vga.h
+└── kernel
+    ├── Makefile
+    ├── init.c
+    ├── arch
+    │   ├── Makefile
+    │   ├── arch.c
+    │   └── start.s
+    ├── driver
+    │   ├── Makefile
+    │   ├── vga.c
+    │   └── vga.h
+    └── utils
+        ├── Makefile
+        └── utils.c
+

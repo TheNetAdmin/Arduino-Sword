@@ -178,7 +178,7 @@ I2CState i2c_send_error(I2CResult state) {
     } else if (state == START_FAIL_BUSY) {
         curr_state = I2C_BUSY;
     }
-    printf("i2c_send_error()\n");
+    printf("i2c_send_error(),%d\n",state);
     while (1)
         ;
     stop_send_i2c();
@@ -258,20 +258,21 @@ I2CState write_i2c(uint8_t dev_addr, const uint8_t *data, uint8_t length, uint8_
     }
 
     result_state = i2c_start_send();
+    printf("0");
     if (result_state != START_SUCC) {
         return i2c_send_error(result_state);
     }
-
+    printf("1");
     result_state = i2c_send_sla((dev_addr << 1) | i2c_write);
     if (result_state != SEND_SLA_W_SUCC) {
         i2c_send_error(result_state);
     }
-
+    printf("2");
     result_state = i2c_send_data(data, length);
     if (result_state != SEND_DATA_SUCC) {
         i2c_send_error(result_state);
     }
-
+    printf("3");
     if (true == send_stop) {
         stop_send_i2c();
     }
@@ -290,7 +291,7 @@ I2CState read_i2c(uint8_t dev_addr, uint8_t *buffer, uint32_t length, uint8_t st
     if (result_state != START_SUCC) {
         return i2c_send_error(result_state);
     }
-
+    
     result_state = i2c_send_sla((dev_addr << 1) | i2c_read);
     if (result_state != SEND_SLA_R_SUCC) {
         return i2c_send_error(result_state);

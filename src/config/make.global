@@ -26,7 +26,11 @@ format:
 # dependencies
 %.o: %.c
 	@echo -e "\t" CC $< "\t" -o $@
-	@$(CC) $(CCFLAG) $< -o $@
+	@$(CP) $(CCFLAG) $< -o $@
+
+%.o: %.cpp
+	@echo -e "\t" CC $< "\t" -o $@
+	@$(CP) $(CCFLAG) $< -o $@
 
 %.o: %.s
 	@echo -e "\t" AS $< "\t" -o $@

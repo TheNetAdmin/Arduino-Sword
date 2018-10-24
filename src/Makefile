@@ -1,6 +1,6 @@
 # source dirs and current dir's objects
 DIRS := kernel arduino
-OBJS := main.o
+OBJS := main.o ArduinoSimulate.o
 
 # compile options
 export ARCH := mips32
@@ -27,8 +27,8 @@ default: show-info all
 
 # non-phony targets
 $(ELF): build-subdirs $(OBJS) find-all-objs
-	@echo -e "\t" LD -Map kernel.map -o kernek.elf
-	@$(LD) -EL -T config/kernel.ld -e $(ENTRANCE) -o $(ELF) $(ALL_OBJS)
+	# @echo -e "\t" LD -Map kernel.map -o kernek.elf
+	$(LD) -EL -T config/mips32.ld -e $(ENTRANCE) -o $(ELF) $(ALL_OBJS)
 
 # phony targets
 .PHONY: all

@@ -106,6 +106,12 @@ void init_pin_uno() {
     set_pin_func(PIN_DIO11, UNO);
     set_pin_mode(PIN_DIO11, OutputPushPull);
 }
+void init_pin_adc() {
+    set_pin_func(PIN_ADC_SDA, UNO);
+    set_pin_mode(PIN_ADC_SDA, OutputOpenDrain);
+    set_pin_func(PIN_ADC_SCL, UNO);
+    set_pin_mode(PIN_ADC_SCL, OutputOpenDrain);
+}
 
 void init_pin_gpio() {
     uint32_t* addr;

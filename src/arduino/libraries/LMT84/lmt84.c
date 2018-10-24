@@ -1,5 +1,7 @@
 #include "lmt84.h"
 #include <inttypes.h>
+#include <Arduino.h>
+#include <vga.h>
 
 #define MAP_SIZE 200
 
@@ -34,4 +36,16 @@ int32_t get_temperature_lmt84(int32_t voltage) {
         }
     }
     return temp_map[map_index].celsius;
+}
+
+/*read analog signal from lmt84 by hardware i2c and i2c communicate with adc*/
+void test_lmt84() { // adc
+    uint32_t result = 0;
+    while(1) {
+        result = analogRead(PIN_AIO0); // communicata with adc
+        result = result * 3300 / 1023;
+        result = get_temperature_lmt84(result);
+        printf("Original temperature data: %d\n", result);
+        delay(2000);
+   }
 }

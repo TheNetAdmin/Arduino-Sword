@@ -7,6 +7,7 @@ void init_arduino() {
     clear_screen(31);
     init_pin_map();
     init_pin_gpio();
+    init_pin_adc();
     delay(5000);
 }
 

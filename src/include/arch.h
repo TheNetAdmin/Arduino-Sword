@@ -32,18 +32,6 @@ extern unsigned int* const VGA_MODE;        // enable graphic mode
 // kernel sp
 extern volatile unsigned int kernel_sp;
 
-// PS/2 control register:
-//  [5:0]: RX buffer load(R)
-//  [13:0]:TX buffer load(R)
-//  [18:16]: Error code(R)
-//  [31]:  Interrupt enable(RW)
-
-//  UART control register:
-//  [7:0]: RX buffer load(R)
-//  [15:8]:TX buffer load(R)
-//  [18:16]: baud rate(RW)
-//  [31]:  Interrupt enable(RW)
-
 // exception and interrupt
 typedef struct {
     unsigned int epc;
@@ -59,8 +47,17 @@ typedef struct {
     unsigned int fp;
     unsigned int ra;
 } context;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void do_exceptions(unsigned int status, unsigned int cause, context* pt_context);
 void do_interrupts(unsigned int status, unsigned int cause, context* pt_context);
 void init_exception();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

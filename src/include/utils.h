@@ -8,7 +8,6 @@ void* memset(void* dest, int b, int len);
 unsigned int* memset_word(unsigned int* dest, unsigned int w, int len);
 int strcmp(const char* dest, const char* src);
 int pow(int x, int z);
-void cache(unsigned int block_index);
 char* strcpy(char* dest, const char* src);
 void serial_puts(char* str);
 void serial_putc(char c);

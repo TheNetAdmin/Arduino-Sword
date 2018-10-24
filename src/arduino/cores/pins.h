@@ -12,6 +12,7 @@ typedef struct GPIO_bank_ {
 void init_pin_map();
 void init_pin_uno();
 void init_pin_gpio();
+void init_pin_adc();
 void print_bank_info(uint8_t);
 
 // Setter

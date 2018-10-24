@@ -26,4 +26,10 @@ uint16_t getManufacturerID_hdc1080();
 uint16_t getDeviceID_hdc1080();
 uint16_t* getSerialID_hdc1080(uint16_t* data, uint8_t length);
 
+void hw_begin_hdc1080();
+uint16_t hw_getTemperature_hdc1080();
+uint16_t hw_getHumidity_hdc1080();
+
+void hw_i2c_test_hdc1080();
+
 #endif /*__MELODY_HDC1080_H__*/

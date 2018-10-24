@@ -58,4 +58,13 @@ int16_t get_z_accelerate_adxl345();
 Accelerate get_accelerate_adxl345();
 uint8_t get_device_id_adxl345();
 
+
+/*hardware i2c*/
+void hw_begin_adxl345();
+int16_t hw_get_x_accelerate_adxl345();
+int16_t hw_get_y_accelerate_adxl345();
+int16_t hw_get_z_accelerate_adxl345();
+
+void hw_i2c_test_adxl345();
+
 #endif // ! _SWORD_ADXL345_H_

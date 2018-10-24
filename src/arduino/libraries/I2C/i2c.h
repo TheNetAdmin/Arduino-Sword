@@ -3,7 +3,10 @@
 
 #include <inttypes.h>
 
+#ifndef _I2C_STATUS
+#define _I2C_STATUS
 typedef enum { I2C_OK = 0, SLAW_NACK, SLAR_NACK, T_DATA_NACK, I2C_NO_INIT, I2C_BUSY, I2C_TIME_OUT, I2C_BUS_ERROR } I2CState;
+#endif
 
 void init_i2c();
 

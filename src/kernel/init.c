@@ -3,6 +3,10 @@
 #include <main.h>
 #include <vga.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void init_kernel() {
     clear_screen(31);
     init_exception();
@@ -14,3 +18,7 @@ void init_kernel() {
     while (1)
         ;
 }
+
+#ifdef __cplusplus
+}
+#endif
